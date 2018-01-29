@@ -12,7 +12,10 @@ router.get('/', function sendVercode(req, res, next) {
   }
 
   request(options, function (err, response, body) {
-    if(err) throw err;
+    if(err) {
+      res.jsonp({ 'state': false, "Err": '验证码出错' });
+      res.end();
+    };
     if(response.statusCode == 200) {
       body = body.toString('base64');
       let result = {

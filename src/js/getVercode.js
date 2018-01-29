@@ -11,6 +11,7 @@ const reqvercode = function(){
     dataType: "json",
     async: true,
     success: function (response) {
+      console.log(response);
       $("#vercodeimg").attr('src', response.result.VerCode);
       const session = B.encode(response.result.Cookies);
       setCookie('session', session, 1)

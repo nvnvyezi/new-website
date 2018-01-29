@@ -8,27 +8,28 @@ const pool = mysql.createPool({
   password: ''
 });
 
-pool.getConnection(function (err, connection) {
-  if (err) {
+pool.getConnection(function (errr, connection) {
+  if (errr) {
     console.log('ERR');
   } else {
-    const add = function (data) {
-      const addsql = "insert into users(id, name, sex, class, direction, phone, email, words) value(?, ?, ?, ?, ?, ?, ?, ?)";
+    const add = function (data, callback) {
+      const addsql = "insert into users(id, name, sex, class, direction, phone, email, words, state) value(?, ?, ?, ?, ?, ?, ?, ?, ?)";
       const addData = [
-        data.id,
-        data.name,
+        data.userid,
+        data.username,
         data.sex,
         data.class,
         data.direction,
         data.phone,
         data.email,
-        data.words
+        data.words,
+        data.state
       ];
       connection.query(addsql, addData, function (err, rows) {
         if (err) {
-          console.log(err);
+          callback(false, err);
         } else {
-          console.log(2);
+          callback(true, rows);
         }
       })
     }
@@ -38,6 +39,7 @@ pool.getConnection(function (err, connection) {
       const sqlFind = 'select * from users where id=?';
       connection.query(sqlFind, findData, function (err, result) {
         if(err) {
+          console.log(err);
           callback(false, err);
         } else {
           callback(true, result);
@@ -45,18 +47,18 @@ pool.getConnection(function (err, connection) {
       })
     }
 
-    const findAll = function () {
+    const findAll = function (callback) {
       const sqlALL = 'SELECT * FROM users';
       connection.query(sqlALL, function(err, result) {
         if(err) {
-          console.log(err);
+          callback(false, err);
         } else {
-          console.log(result);
+          callback(true, result);
         }
       })
     }
 
-    const change = function (data) {
+    const change = function (data, callback) {
       const changeSql = "UPDATE users SET state = ? WHERE id = ?";
       const changeData = [
         data.state,
@@ -64,21 +66,21 @@ pool.getConnection(function (err, connection) {
       ];
       connection.query(changeSql, changeData, function (err, result) {
         if (err) {
-          console.log(err);
+          callback(false, err);
         } else {
-          console.log(result);
+          callback(true, result);
         }
       });
     };
 
-    const Delete = function (data) {
+    const Delete = function (data, callback) {
       const sqlDelete = 'DELETE FROM users WHERE id = ?';
       const deleteData = [data];
-      connection.query(sqlDelete, deleteData, function (result) {
+      connection.query(sqlDelete, deleteData, function (err, result) {
         if(err) {
-          console.log(err);
+          callback(false, err);
         } else {
-          console.log(result);
+          callback(true, result);
         }
       })
     }

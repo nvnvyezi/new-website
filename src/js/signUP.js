@@ -59,16 +59,18 @@ $(document).ready(function () {
     let userData = {
       userid: getCookie('userid'),
       username: getCookie('username'),
-      sex: $('#gender').val(),
+      sex: "",
+      class: '',
       // phone: $('#phone').val(),
       phone: '18220596362',
       // email: $('#email').val(),
       email: '1187128658@qq.com',
       direction: $('#direction').val(),
-      words: $('#words').val()
+      words: $('#words').val(),
+      state: '别急'
     };
-    if(userData.sex == null || userData.direction == null) {
-      alert('性别，方向');
+    if(userData.direction == null) {
+      alert('方向');
     } else {
       if (userData.phone != '') {
         checkPhone(userData.phone).then(function () {

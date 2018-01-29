@@ -6,6 +6,10 @@ const cookieParser = require('cookie-parser');
 const login = require('./login.js');
 const vercode = require('./vercode.js');
 const signUp = require('./signUp');
+const infoOne = require('./infoOne');
+const infoAll  = require('./infoAll');
+const change = require('./change');
+const del = require('./delete');
 
 const app = express();
 
@@ -24,6 +28,10 @@ app.all('*', function (req, res, next) {
 app.use('/Vercode', vercode);
 app.use('/Login', login);
 app.use('/SignUp', signUp);
+app.use('/infoOne', infoOne);
+app.use('/infoAll', infoAll);
+app.use('/Change', change);
+app.use('/Delete', del);
 
 app.listen(3000, function (params) {
   console.log('3000 is ready');  

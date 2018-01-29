@@ -1,5 +1,7 @@
 const express = require('express');
 const request = require('request');
+const iconv = require('iconv-lite');
+const cheerio = require('cheerio');
 
 const mysql = require('./mysql');
 const Base64 = require('./base64');
@@ -13,8 +15,7 @@ router.get('/', function (req, res) {
   const userData = req.query.userData;
   mysql.sqlFind(userData.userid, function (judge, data) {
     if(judge) {
-      console.log(data[0].id);
-      if(data[0].id == '') {
+      if(data[0] != undefined) {
         let result = {
           "Error": true,
           'Result': '你已经报过名啦'
@@ -86,21 +87,59 @@ router.get('/', function (req, res) {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
         },
       }
-      console.log(3);
       request(options, function (err, response, body) {
         if(err) {
-          reject(err);
+          let result = {
+            'Err': true,
+            'Result': '服务器请求错误'
+          }
+          reject(result);
         }
-        console.log(body);
+        body = iconv.decode(body, 'GB2312');
+        const $ = cheerio.load(body);
+        userData.class = $('#lbl_xzb').text();
+        userData.sex = $('#lbl_xb').text();
+        userData.username = $('#xm').text();
+        resolve(userData);
       })
     })
     return promise;
   }
+
+  const linkCrawling = function () {
+    crawlingSignUp(userData).then(function (data) {
+      mysql.sqlAdd(data, function (boolean, result) {
+        if (boolean) {
+          let result = {
+            "Error": false,
+            'Result': '报名成功'
+          }
+          res.jsonp({ 'state': true, result });
+          res.end();
+        } else {
+          let result = {
+            "Error": 'true',
+            'Result': '数据库错误，报名失败'
+          }
+          res.jsonp({ 'state': false, result });
+          res.end();
+        }
+      });
+    }, function () {
+      let result = {
+        "Error": true,
+        'Result': '服务器炸了'
+      }
+      res.jsonp({ 'state': true, result });
+      res.end();
+    });
+  }
+
   const judgeUserdata = function () {
-    if (userData.sex == '' || userData.direction == '') {
+    if (userData.direction == '') {
       let result = {
         "Error": 'true',
-        'Result': '性别方向'
+        'Result': '方向'
       }
       res.jsonp({ 'state': false, result });
       res.end();
@@ -111,16 +150,7 @@ router.get('/', function (req, res) {
             checkEmail(userData.email).then(function () {
               if (userData.words != '') {
                 checkWords(userData.words).then(function () {
-                  crawlingSignUp(userData).then(function (data) {
-
-                  }, function () {
-                    let result = {
-                      "Error": true,
-                      'Result': '服务器炸了'
-                    }
-                    res.jsonp({ 'state': true, result });
-                    res.end();
-                  });
+                  linkCrawling();
                 }, function () {
                   let result = {
                     "Error": 'true',
@@ -130,16 +160,7 @@ router.get('/', function (req, res) {
                   res.end();
                 })
               } else {
-                crawlingSignUp(userData).then(function (data) {
-                  console.log(data);
-                }, function () {
-                  let result = {
-                    "Error": 'true',
-                    'Result': '报名失败'
-                  }
-                  res.jsonp({ 'state': false, result });
-                  res.end();
-                });
+                linkCrawling();
               }
             }, function () {
               let result = {
@@ -150,16 +171,7 @@ router.get('/', function (req, res) {
               res.end();
             });
           } else {
-            crawlingSignUp(userData).then(function (data) {
-              console.log(data);
-            }, function () {
-              let result = {
-                "Error": 'true',
-                'Result': '报名失败'
-              }
-              res.jsonp({ 'state': false, result });
-              res.end();
-            });
+            linkCrawling();
           }
         }, function () {
           let result = {
@@ -170,16 +182,7 @@ router.get('/', function (req, res) {
           res.end();
         });
       } else {
-        crawlingSignUp(userData).then(function (data) {
-          console.log(data);
-        }, function () {
-          let result = {
-            "Error": 'true',
-            'Result': '报名失败'
-          }
-          res.jsonp({ 'state': false, result });
-          res.end();
-        });
+        linkCrawling();
       }
     }
   }
