@@ -61,10 +61,8 @@ $(document).ready(function () {
       username: getCookie('username'),
       sex: "",
       class: '',
-      // phone: $('#phone').val(),
-      phone: '18220596362',
-      // email: $('#email').val(),
-      email: '1187128658@qq.com',
+      phone: $('#phone').val(),
+      email: $('#email').val(),
       direction: $('#direction').val(),
       words: $('#words').val(),
       state: '别急'
