@@ -2,8 +2,8 @@
   <div class="box phone__box">
     <div class="zbox phone__zbox">
       <section>
-        <h2>Android</h2>
-        <p>Our size determines the meaning of our existence.</p>
+        <h2>ios</h2>
+        <p>A team of tyrants! We are born with I and coexist with beauty!</p>
         <router-link to="/signup">Go to sign up</router-link>
       </section>
       <div class="phone__webImg">
@@ -18,7 +18,7 @@
 
 <script>
   export default {
-    name: 'android'
+    name: 'ios'
   }
 </script>
 

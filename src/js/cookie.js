@@ -9,7 +9,8 @@ export function getCookie (name) {
 export function setCookie(c_name, value, expiredays) {
   var exdate = new Date();
   exdate.setDate(exdate.getDate() + expiredays);
-  document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString());
+  // console.log(222);
+  document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString() + ";path=/dist");
 }
 
 export function delCookie(name) {
@@ -20,6 +21,14 @@ export function delCookie(name) {
     document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
 
-export function clearCookie() {
-  this.setCookie('username', '', -1);
+export function clearCookie(name) {
+  var exp = new Date();
+  exp.setTime(exp.getTime() - 1);
+  var cval = getCookie(name);
+  if (cval != null)
+    document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+}
+
+export function undecode (str) {
+  return unescape(str);
 }

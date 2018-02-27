@@ -5,24 +5,30 @@ import App from './App'
 import router from './router'
 import { getCookie } from './js/cookie'
 
-Vue.config.productionTip = false
+// Vue.http.interceptors.push(function (request, next) {
+//   //拦截器
+//   // 跨域携带cookie
+//   request.credentials = true;
+//   next()
+// });
+
+Vue.config.productionTip = false;
 
 router.beforeEach((to, from, next) => {
   const token = getCookie('username');
-  if (to.meta.boolean) {
+  if (to.matched.some(record => record.meta.boolean)) {
     if (token) {
-      next('/admin')
+      next('admin')
     }
     next()
   } else {
     if (token) {
       next()
     } else {
-      next('/login')
+      next('')
     }
   }
 });
-
 
 /* eslint-disable no-new */
 new Vue({
