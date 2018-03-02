@@ -97,6 +97,9 @@
                   <el-radio :label='"Android"'>Android</el-radio>
                   <el-radio :label='"Java后台"'>Java后台</el-radio>
                 </el-radio-group>
+                <!-- <label><input type="checkbox" name="check1" value="web"/>web</label>
+                <input type="checkbox" name="check2"/>
+                <input type="checkbox" name="check3"/> -->
               </div>
             </section>
             <section>
@@ -432,6 +435,7 @@ export default {
 }
 @media screen and(max-width: 750px) {
   figure {
+    animation: anfig 2s .5s ease;
     // margin-top:100px;
     max-width: 100%;
     // min-width: 1000px;
@@ -442,7 +446,8 @@ export default {
     flex-wrap: wrap;
     background-color: white;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 10px;
+    position: relative;
     div {
       width: 20%;
       height: 120px;
@@ -458,19 +463,39 @@ export default {
       }
     }
   }
+  @keyframes anfig {
+    0% {
+      left:-1000px;
+    }
+    100% {
+      left:0;
+    }
+  }
 }
 .phone__box {
   width: 100%;
   overflow-x: hidden;
+  height: 100%;
+  // overflow-y: hidden;
   h2 {
     font-size: 24px;
     font-weight: 500;
     letter-spacing: 5px;
     padding-top: 40px;
     margin-bottom: 30px;
+    animation: anh2 2s .5s ease;
+    position: relative;
+  }
+  @keyframes anh2 {
+    0% {
+      top:-1000px;
+    }
+    100% {
+      top:0;
+    }
   }
 }
-.phone__table {
+    .phone__table {
       border-top: 1px solid rgb(134, 132, 132);
       // border-radius: 8px;
       width: 100%;
@@ -479,17 +504,20 @@ export default {
       justify-content: center;
       height: 340px;
       background-color: white;
-      margin-bottom: 50px;
+      // margin-bottom: 50px;
+      // overflow: hidden;
       .phone__ztable {
-        width: 92%;
+        width: 90%;
         height: 310px;
         display: flex;
         // margin: 0 auto;
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
+        // overflow: hidden;
       }
       section {
+        opacity: 0;
         // display: flex;
         // align-self: center;
         // justify-content: center;
@@ -499,6 +527,7 @@ export default {
         line-height: 10px;
         // background-color: red;
         text-align: left;
+        position: relative;
         input,
         textarea {
           width: 100%;
@@ -507,13 +536,14 @@ export default {
           color: rgba(12, 6, 1, 0.959);
           font-size: 1rem;
           letter-spacing: 2px;
-          padding-left: 10px;
+          // padding-left: 10px;
           border: 1px solid rgb(161, 159, 159);
         }
         input:focus,
         textarea:focus {
           background-color: rgb(209, 207, 207);
           outline: none;
+          padding-left: 10px;
         }
         input::-webkit-input-placeholder,
         textarea::-webkit-input-placeholder {
@@ -528,7 +558,65 @@ export default {
         .dire {
           // width: 340px;
           margin: 0 auto;
+          .el-radio+.el-radio {
+            margin-left: 10px;
+          }
         }
       }
     }
+	.phone__ztable section:nth-child(1) {animation: sect1 2s .5s ease; animation-fill-mode: forwards;}
+	.phone__ztable section:nth-child(2) {animation: sect2 2s .7s ease; animation-fill-mode: forwards;}
+	.phone__ztable section:nth-child(3) {animation: sect3 2s .9s ease; animation-fill-mode: forwards;}
+	.phone__ztable section:nth-child(4) {animation: sect4 2s 1.1s ease; animation-fill-mode: forwards;}
+  .phone__ztable section:nth-child(5) {animation: sect5 2s 1.3s ease; animation-fill-mode: forwards;}
+  @keyframes sect1 {
+    0% {
+      opacity: 0;
+      left: 600px;
+    }
+    100% {
+      left:0;
+      opacity: 1;
+    }
+  }
+  @keyframes sect2 {
+    0% {
+      opacity: 0;
+      left: 600px;
+    }
+    100% {
+      left:0;
+      opacity: 1;
+    }
+  }
+  @keyframes sect3 {
+    0% {
+      opacity: 0;
+      left: 600px;
+    }
+    100% {
+      left:0;
+      opacity: 1;
+    }
+  }
+  @keyframes sect4 {
+    0% {
+      opacity: 0;
+      left: 600px;
+    }
+    100% {
+      left:0;
+      opacity: 1;
+    }
+  }
+  @keyframes sect5 {
+    0% {
+      opacity: 0;
+      left: 600px;
+    }
+    100% {
+      left:0;
+      opacity: 1;
+    }
+  }
 </style>

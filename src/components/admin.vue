@@ -1,6 +1,6 @@
 <template>
   <div class="box" v-if="animating">
-    <header>
+    <!-- <header>
       <div class="navigation">
         <ul>
           <li>
@@ -10,7 +10,7 @@
             <router-link to="admin">Home</router-link>
           </li>
           <li>
-            <router-link to="web">Web</router-link>
+            <router-link to="web" >Web</router-link>
           </li>
           <li>
             <router-link to="ios">ios</router-link>
@@ -40,8 +40,8 @@
           </li>
         </ul>
       </div>
-    </header>
-    <transition name="slide-fade" mode="">
+    </header> -->
+    <transition :name="tsname" mode="">
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
@@ -83,32 +83,40 @@
 			<!-- Checkbox to toggle the menu -->
 			<input type="checkbox" id="tm" />
 			<!-- The menu -->
-			<ul class="sidenav">
-				<li><router-link to="/admin"><i class="fa fa-check"></i><b>Home</b></router-link></li>
-				<li><router-link to="/web"><i class="fa fa-twitter"></i><b>Web</b></router-link></li>
-				<li><router-link to="/ios"><i class="fa fa-pencil"></i><b>ios</b></router-link></li>
-				<li><router-link to="/android"><i class="fa fa-eye"></i><b>Android</b></router-link></li>
-				<li><router-link to="/Java"><i class="fa fa-star"></i><b>Java后台</b></router-link></li>
-				<li><router-link to="/product"><i class="fa fa-inbox"></i><b>Product</b></router-link></li>
+			<ul class="sidenav" @click="aaa">
+				<li><router-link to="admin"><i class="fa fa-check"></i><b>Home</b></router-link></li>
+				<li><router-link to="web"><i class="fa fa-twitter"></i><b>Web</b></router-link></li>
+				<li><router-link to="ios"><i class="fa fa-pencil"></i><b>ios</b></router-link></li>
+				<li><router-link to="android"><i class="fa fa-eye"></i><b>Android</b></router-link></li>
+				<li><router-link to="Java"><i class="fa fa-star"></i><b>Java后台</b></router-link></li>
+				<li><router-link to="product"><i class="fa fa-inbox"></i><b>Product</b></router-link></li>
         <li><span @click="query"><i class="fa fa-comment"></i><b>查询状态</b></span></li>
-        <li><router-link to="/signup"><i class="fa fa-key"></i><b>Signup</b></router-link></li>
+        <li><router-link to="signup"><i class="fa fa-key"></i><b>Signup</b></router-link></li>
         <li v-if="judge"><span v-on:click="delLogin"><i class="fa fa-magic"></i><b>Login</b></span></li>
         <li v-else><span v-on:click="delLogin"><i class="fa fa-magic"></i><b>{{ name }}</b></span></li>
-        <li><span @click="exit"><i class="fa fa-power-off"></i><b>Exit</b></span></li>
+        <li v-if="!judge"><span @click="exit"><i class="fa fa-power-off"></i><b>Exit</b></span></li>
 			</ul>
 			<!-- Content area -->
-			<section>
+			<section >
+        
+      <!-- <div class="adminbg">
+        <img id="bg" src="" alt="" />
+      </div> -->
         <!-- Label for #tm checkbox -->
 				<label for="tm" class="cd-nav-trigger" @click="rotatez">
           <span class="cd-nav-icon"></span>
-          <svg x="0px" y="0px" width="54px" height="54px" viewBox="0 0 54 54">
+          <svg x="0px" y="0px" width="50px" height="50px" viewBox="0 0 54 54">
             <circle fill="transparent" stroke="#656e79" stroke-width="1" cx="27" cy="27" r="25" stroke-dasharray="157 157" stroke-dashoffset="157"></circle>
           </svg>
         </label>
-        <router-view></router-view>
-        <div class="phone__logo">
+        <transition :name="tsname" mode="">
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
+        </transition>
+        <!-- <div class="phone__logo">
           <p>Copyright © 2018 西安邮电大学移动开发应用实验室 All rights reserved</p>
-        </div>
+        </div> -->
 			</section>
 		</div>
 	</div>
@@ -120,6 +128,7 @@ import { clearCookie } from "../js/cookie";
 import { getCookie } from '../js/cookie';
 import { undecode } from '../js/cookie';
 import { MessageBox } from 'mint-ui';
+import { setInterval } from 'timers';
 export default {
   name: 'admin',
   data () {
@@ -129,10 +138,16 @@ export default {
       name: undecode(getCookie('username')),
       mark: 0,
       tate: 0,
+      tsname: 'admin',
       carouData: [
         require('../assets/android.jpg'),
         require('../assets/ios.jpg'),
         require('../assets/web.jpg'),
+      ],
+      imgArr: [
+        require('../assets/fix-pe1.jpg'),
+        require('../assets/fix-pe2.jpg'),
+        require('../assets/fix-pe3.jpg'),
       ]
     }
   },
@@ -141,8 +156,49 @@ export default {
     if(getCookie('username') !== '12345678') {
       this.judge = false;
     }
+    // let bg = $('#bg')
+    // let count = 1;
+    // let that = this;
+    // bg.attr('src', "require('../assets/fix-pe1.jpg')");
+    // setInterval(function () {
+    //   bg.attr('src', that.imgArr[count]);
+    //   // console.log(that.imgArr[count]);
+    //   count++;
+    //   if (count == 3) {
+    //     count = 0;
+    //   }
+    // }, 3000);
+  },
+  watch: {
+    '$route' (to, from) {
+      if(to.path === '/admin') {
+        this.tsname = 'admin';
+      }
+      if(to.path === '/web') {
+        this.tsname = 'web';
+      }
+      if(to.path === '/android') {
+        this.tsname = 'android';
+      }
+      if(to.path === '/ios') {
+        this.tsname = 'ios';
+      }
+      if(to.path === '/Java') {
+        this.tsname = 'java';
+      }
+      if(to.path === '/product') {
+        this.tsname = 'product';
+      }
+      if(to.path === '/signup') {
+        this.tsname = 'signup';
+      }
+    }
   },
   methods: {
+    aaa () {
+      // alert()
+      $("input[type='checkbox']").prop("checked",false);
+    },
     rotatez () {
       this.tate += 360;
       let aaa = $('.cd-nav-trigger');
@@ -280,21 +336,86 @@ export default {
   padding: 0;
   list-style: none;
 }
-.slide-fade-enter-active {
-  transition: all .3s ease;
-}
-.slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active for below version 2.1.8 */ {
-  transform: translateX(10px);
-  opacity: 0;
+.adminbg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  // z-index: 2;
+  // background: url("../assets/fix-pe1.jpg");
 }
 @media screen and (min-width:100px) and (max-width:750px) {
-  @import '../less/default.css';
+  @font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot?rretjt');
+	src:url('../fonts/icomoon.eot?#iefixrretjt') format('embedded-opentype'),
+		url('../fonts/icomoon.woff?rretjt') format('woff'),
+		url('../fonts/icomoon.ttf?rretjt') format('truetype'),
+		url('../fonts/icomoon.svg?rretjt#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+  // @import '../less/default.css';
   @import 'https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css';
   // @import 'http://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css';
+  .web-leave-active {
+  transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.admin-enter-active {
+  // transition: all .3s ease;
+  transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.admin-enter-to {
+  transform: rotateY(360deg);
+  opacity: 0;
+}
+.web-leave-to {
+  // transform: translateX(10px);
+  transform: rotate(360deg);
+  opacity: 0;
+}
+.ios-leave-active {
+  transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.ios-leave-to {
+  // transform: translateX(10px);
+  transform: scale3d(0,0,0);
+  // animation: 
+  opacity: 0;
+}
+.android-leave-active {
+  transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.android-leave-to {
+  transform: translate3d(300px,300px,300px);
+  opacity: 0;
+}
+.java-leave-active {
+  transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.java-leave-to {
+  transform: matrix(1,0.8,-0.8,0.586,40,40);
+  opacity: 0;
+}
+.product-leave-active {
+  transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.product-leave-to {
+  transform: skewX(180deg);
+  opacity: 0;
+}
+.signup-leave-active {
+  transition: all 1s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.signup-leave-to {
+  transform: skewY(180deg);
+  opacity: 0;
+}
   .phone__logo {
     width: 100%;
     height: 50px;
@@ -316,8 +437,8 @@ export default {
   z-index: 3;
   left: 5%;
   top: 20px;
-  height: 54px;
-  width: 54px;
+  height: 45px;
+  width: 45px;
   background-color: #243040;
   opacity: 0.5;
   border-radius: 50%;
@@ -456,7 +577,8 @@ export default {
 	#tm {display: none;}
 	/*Content area*/
 	.mobile section {
-    background: url("../assets/mb1.png");
+    background: url("../assets/fix-pe4.jpg");
+    // background-color: white;
     background-size: 100% 100%;
 		width: 100%; height: 100%;
 		position: relative; transition: all 0.25s;
@@ -471,7 +593,7 @@ export default {
 	/*Nav styles*/
 	.sidenav {
 		background: rgb(50, 60, 60); width: 150px;
-		position: absolute; left: 0; top: 0; bottom: 0; padding-top: 100px;
+		position: absolute; left: 0; top: 0; bottom: 0; padding-top: 50px;
 	}
 	.sidenav li {list-style-type: none;}
   .sidenav a,

@@ -1,142 +1,352 @@
 <template>
-  <div class="box phone__box">
+  <div class="box" v-if="animating">
     <div class="zbox phone__zbox">
       <section>
         <h2>Web</h2>
         <p>You have us as you have the world……</p>
         <router-link to="/signup">Go to sign up</router-link>
       </section>
-      <div class="phone__webImg">
+      <div class="phone__webImg"> -->
         <img src="../assets/web1.png" alt="">
       </div>
       <div class="phone__introduce">
-        <p>利用Android系统的开放性，Android开发组进行了各种各样的移动应用开发，是实验室中成果最多、规模最大的开发组。Android开发组多次参加多种大赛，并获得了不错的成绩！应用《酷步》，曾参加全国级大赛并获奖，《西邮图书借阅系统》率先发布，《iXiyou》整合了多种与西邮校园相关的功能，方便了西邮学生。Android开发组已走出了多位优秀的学长、学姐，并就职于国内知名企业。</p>
+        <p>iOS 开发组现有成员12个。分别来自计科、软件、网络等专业。iOS组配备了 15 台 Mac mini 和 7 台 iMac。是目前实验室设备配置最好，规模最大的开发组。 组成员们利用实验室设备和iOS平台的种种优势，积极进取，共同奋斗。先后开发了 《iXiyou》、《西邮图书馆》、《快递查询》、《生活百事通》、 《微博客户端》、《天气查询系统》等移动应用,并在不断的完善、优化。</p>
       </div>
+    </div>
+  </div>
+  <div class="phone__box" v-else>
+    <div class="phone__swipe">
+      <mt-swipe :auto="0" :show-indicators='false'>
+        <mt-swipe-item class="zswipe">
+          <section>
+            <h2>Web</h2>
+            <p>You have us as you have the world……</p>
+            <router-link to="/signup">Go to sign up</router-link>
+          </section>
+        </mt-swipe-item>
+        <mt-swipe-item class="zswipe">
+          <span><h3>现任组长 - 陈普钦</h3></span>
+          <div class="phone__info">
+            <div class="phone__zinfo">
+              <p>iOS 开发组现有成员12个。分别来自计科、软件、网络等专业。iOS组配备了 15 台 Mac mini 和 7 台 iMac。是目前实验室设备配置最好，规模最大的开发组。 组成员们利用实验室设备和iOS平台的种种优势，积极进取，共同奋斗。先后开发了 《iXiyou》、《西邮图书馆》、《快递查询》、《生活百事通》、 《微博客户端》、《天气查询系统》等移动应用,并在不断的完善、优化。</p>
+            </div>
+          </div>
+          <router-link to="admin">Home</router-link>
+        </mt-swipe-item>
+      </mt-swipe>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'web'
-}
+import { Swipe, SwipeItem } from 'mint-ui';
+import Vue from 'vue'
+Vue.component(Swipe.name, Swipe);
+Vue.component(SwipeItem.name, SwipeItem);
+  export default {
+    name: 'ios',
+    data () {
+      return {
+        animating: true
+      }
+    },
+    mounted () {
+      if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+          this.animating = false;
+      } else {
+          this.animating = true;
+      }
+    }
+  }
 </script>
 
 <style lang="less" scoped>
-* {
-  margin: 0;
-  padding: 0;
-}
-@media screen and(min-width: 750px) {
-  .box {
-    width: 100%;
-    min-width: 1000px;
-    .zbox {
-      width: 90%;
-      // height: 1000px;
-      max-width: 100%;
-      margin: 0 auto;
-      // background-color: aqua;
-      section {
-        width: 400px;
-        margin: 0 auto;
-        padding-top: 70px;
-        h2 {
-          font-size: 3em;
-        }
-        p {
-          padding-bottom: 30px;
-          font-weight: 700;
-          font-size: 2em;
-        }
-        a {
-          font-size: 1.1em;
-          font-weight: 100;
-          text-decoration: none;
-          color: rgb(77, 117, 248);
-        }
-        a:hover {
-          text-decoration: line-through;
-          vertical-align: middle;
-          text-align: left;
-        }
-      }
-      .webImg {
-        margin: 100px;
-      }
-      .introduce {
-        width: 1200px;
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  @media screen and(min-width: 750px) {
+    .box {
+      width: 100%;
+      min-width: 1000px;
+      .zbox {
+        width: 90%; // height: 1000px;
         max-width: 100%;
-        margin: 0 auto;
-        margin-bottom: 100px;
-        p {
-          font-size: 1em;
-          letter-spacing: 2px;
-          line-height: 20px;
-          text-align: left;
+        margin: 0 auto; // background-color: aqua;
+        section {
+          width: 400px;
+          margin: 0 auto;
+          padding-top: 70px;
+          h2 {
+            font-size: 3em;
+          }
+          p {
+            padding-bottom: 30px;
+            font-weight: 700;
+            font-size: 2em;
+          }
+          a {
+            font-size: 1.1em;
+            font-weight: 100;
+            text-decoration: none;
+            color: rgb(77, 117, 248);
+          }
+          a:hover {
+            text-decoration: line-through;
+            vertical-align: middle;
+            text-align: left;
+          }
+        }
+        .webImg {
+          margin: 100px;
+        }
+        .introduce {
+          width: 1200px;
+          max-width: 100%;
+          margin: 0 auto;
+          margin-bottom: 100px;
+          p {
+            font-size: 1em;
+            letter-spacing: 2px;
+            line-height: 20px;
+            text-align: left;
+          }
         }
       }
     }
   }
-}
-@media screen and(max-width: 750px) {
-  .phone__box {
-    width: 100%;
-    max-width: 100%;
-    .phone__zbox {
-      width: 90%;
-      // height: 1000px;
+
+  @media screen and(max-width: 750px) {
+    .phone__box {
+      width: 100%;
       max-width: 100%;
-      margin: 0 auto;
-      // background-color: aqua;
-      section {
+      height: 100%;
+      // background-color: red;
+      background: url("../assets/web3.jpg");
+    // background-color: white;
+    background-size: 100% 100%;
+      .phone__swipe {
         width: 100%;
-        // margin: 0 auto;
-        padding-top: 50px;
-        h2 {
-          font-size: 3.5rem;
-          font-weight: 600;
-        }
-        p {
-          padding-top: 10px;
-          padding-bottom: 10px;
-          font-weight: 500;
-          font-size: 2rem;
-        }
-        a {
-          font-size: 1.5rem;
-          font-weight: 100;
-          text-decoration: none;
-          color: rgb(6, 213, 250);
-        }
-        a:hover {
-          text-decoration: line-through;
-          vertical-align: middle;
-          text-align: left;
-        }
-      }
-      .phone__webImg {
-        width: 80vw;
-        img {
+        height: 100%;
+        overflow: hidden;
+        .zswipe {
           width: 100%;
-          height: auto;
-        }
-        margin: 40px auto 20px auto;
-      }
-      .phone__introduce {
-        width:90%;
-        max-width: 100%;
-        margin: 0 auto;
-        margin-bottom: 100px;
-        p {
+          height: 100%;
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           color: white;
-          font-size: 1em;
-          letter-spacing: 2px;
-          line-height: 20px;
-          text-align: left;
+          flex-direction: column;
+          span {
+            width: 80%;
+            text-align: right;
+            margin: 0 auto;
+            position: relative;
+            top: 10px;
+            animation: toph3 2s 1s ease;
+            h3 {
+              font-size: 2rem;
+              font-weight: 550;
+            }
+          }
+          @keyframes toph3 {
+            0% {
+              top: -1000px;
+            }
+            100% {
+              top: 0;
+            }
+          }
+          a {
+            font-size: 2rem;
+            position: relative;
+            top: 40px;
+            color: white;
+            font-weight: 400;
+            animation: bottoma 2s 1s ease;
+          }
+          @keyframes bottoma {
+            0% {
+              top: 1000px;
+            }
+            100% {
+              top: 0;
+            }
+          }
+          .phone__info {
+            width: 80%;
+            max-width: 100%;
+            height: auto;
+            padding: 50px 0;
+            margin: 0 auto;
+            // margin-bottom: 100px;
+            // border: 1px solid rgb(8, 199, 247);
+            border-top: none;
+            border-radius: 5rem 0 5rem 0;
+            box-shadow: 1px 1px 20px 2px #f3dd95 inset;
+            animation: info 2s 1s ease;
+            .phone__zinfo {
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              p {
+                width: 85%;
+                color: white;
+                font-size: 1.2em;
+                letter-spacing: 2px;
+                line-height: 17px;
+                text-align: left;
+                animation: infop 2s 1s ease;
+              }
+              @keyframes infop {
+                0% {
+                  // transform: scale3d(0,0,0);
+                }
+                100% {
+                  // transform: scale3d(1.1,1.1,1.1);
+                  transform: rotateZ(360deg);
+                }
+              }
+            }
+          }
+          @keyframes info {
+            0% {
+              transform: scale3d(0,0,0);
+            }
+            100% {
+              transform: scale3d(1.1,1.1,1.1);
+            }
+          }
+          section {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: wrap;
+          width: 300px; // margin: 0 auto;
+          // padding-top: 50px;
+          height: 200px;
+          h2 {
+            width: 90%;
+            font-size: 3.5rem;
+            font-weight: 600;
+            position: relative;
+            letter-spacing: 1px;
+            top: 0;
+            animation: toph2 2s 0.2s ease;
+          }
+          @keyframes toph2 {
+            0% {
+              top: -1000px;
+            }
+            100% {
+              top: 0;
+            }
+          }
+          p {
+            // padding-top: 10px;
+            // padding-bottom: 10px;
+            font-weight: 500;
+            font-size: 2rem;
+            width: 90%;
+            position: relative;
+            left: 0;
+            animation: leftp 2s 0.2s ease;
+          }
+          @keyframes leftp {
+            0% {
+              left:-1000px;
+            }
+            100% {
+              left: 0;
+            }
+          }
+          a {
+            width: 90%;
+            font-size: 1.5rem;
+            font-weight: 100;
+            text-decoration: none;
+            color: rgb(6, 213, 250);
+            position: relative;
+            top: 0;
+            animation: bottoma 2s 0.2s ease;
+          }
+          @keyframes bottoma {
+            0% {
+              top: 1000px;
+            }
+            100% {
+              top: 0;
+            }
+          }
+          a:hover {
+            text-decoration: line-through;
+            vertical-align: middle;
+            text-align: left;
+          }
+        }
         }
       }
+      // .phone__zbox {
+      //   width: 90%; // height: 1000px;
+      //   max-width: 100%;
+      //   margin: 0 auto; // background-color: aqua;
+        // section {
+        //   width: 100%; // margin: 0 auto;
+        //   padding-top: 50px;
+        //   h2 {
+        //     font-size: 3.5rem;
+        //     font-weight: 600;
+        //   }
+        //   p {
+        //     padding-top: 10px;
+        //     padding-bottom: 10px;
+        //     font-weight: 500;
+        //     font-size: 2rem;
+        //   }
+        //   a {
+        //     font-size: 1.5rem;
+        //     font-weight: 100;
+        //     text-decoration: none;
+        //     color: rgb(6, 213, 250);
+        //   }
+        //   a:hover {
+        //     text-decoration: line-through;
+        //     vertical-align: middle;
+        //     text-align: left;
+        //   }
+        // }
+      //   .phone__webImg {
+      //     width: 80vw;
+      //     img {
+      //       width: 100%;
+      //       height: auto;
+      //     }
+      //     span {
+      //       font-size: 20px;
+      //       font-weight: 530;
+      //       letter-spacing: 1px;
+      //       color: white;
+      //     }
+      //     margin: 40px auto 20px auto;
+      //   }
+      //   .phone__introduce {
+      //     width: 95%;
+      //     max-width: 100%;
+      //     margin: 0 auto;
+      //     margin-bottom: 100px;
+      //     border: 1px solid green;
+      //     p {
+      //       width: 85%;
+      //       color: white;
+      //       font-size: 1em;
+      //       letter-spacing: 2px;
+      //       line-height: 17px;
+      //       text-align: left;
+      //     }
+      //   }
+      // }
     }
   }
-}
 </style>

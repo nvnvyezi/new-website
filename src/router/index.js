@@ -14,6 +14,7 @@ import web from '@/Subcomponent/web'
 import ios from '@/Subcomponent/ios'
 import produce from '@/Subcomponent/produce'
 import java from '@/Subcomponent/java'
+// import test from '@/Subcomponent/test'
 
 Vue.use(Router)
 Vue.use(ElementUI)
@@ -39,6 +40,11 @@ export default new Router({
           component: home,
           name: 'home'
         },
+        // {
+        //   path: '/',
+        //   component: test,
+        //   name: 'test'
+        // },
         {
           path: '/android',
           component: android,

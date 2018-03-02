@@ -25,6 +25,10 @@
   <div class="cont" v-else>
     <div class="demo">
       <div class="login">
+        <!-- <p>Xiyou Mobile 
+          <br>
+          移动应用开发实验室
+        </p> -->
         <div class="login__check"></div>
         <div class="login__form">
           <div class="login__row">
@@ -41,7 +45,7 @@
           </div>
           <div class="login__row">
             <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
-              <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
+              <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4" />
             </svg>
             <input type="text" class="login__input name" id="vercode" placeholder="Vercode" />
             <section class="loginImg"><img v-on:click="ajaxVercode" src="" alt='vercode' id='vercodeimg' /></section>
@@ -85,7 +89,9 @@ export default {
     skipLorgin () {
       MessageBox.confirm('确定跳过登陆?').then(action => {
         setCookie('username', '12345678', 1);
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       });
     },
     loginSubmit (event) {
@@ -361,8 +367,10 @@ input, button {
 .cont {
   position: relative;
   height: 100%;
-  background-image: url("http://i.imgur.com/UP7fWfg.jpg");
-  background-size: cover;
+  width: 100%;
+  background-image: url("../assets/fix-pe4.jpg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   overflow: auto;
   // background-color: red;
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
@@ -386,13 +394,19 @@ input, button {
 .login {
   position: relative;
   height: 100%;
-  background: -webkit-linear-gradient(top, rgba(146, 135, 187, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
-  background: linear-gradient(to bottom, rgba(146, 135, 187, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+  // background: -webkit-linear-gradient(top, rgba(214, 205, 245, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
+  // background: linear-gradient(to bottom, rgba(212, 203, 248, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
   -webkit-transition: opacity 0.1s, -webkit-transform 0.3s cubic-bezier(0.17, -0.65, 0.665, 1.25);
           transition: opacity 0.1s, transform 0.3s cubic-bezier(0.17, -0.65, 0.665, 1.25);
   -webkit-transform: scale(1);
       -ms-transform: scale(1);
           transform: scale(1);
+  p {
+    font-size: 1rem;
+    padding-top: 4rem;
+    font-weight: 400;
+    color: rgb(250, 235, 199);
+  }
 }
 .login.inactive {
   opacity: 0;
@@ -465,7 +479,7 @@ input, button {
 }
 .login__input {
   display: inline-block;
-  width: 20rem;
+  width: 85%;
   height: 100%;
   padding-left: 1.5rem;
   font-size: 1.5rem;
@@ -479,6 +493,7 @@ input, button {
   position: relative;
   width: 100%;
   height: 4rem;
+  bottom: 1.5rem;
   margin: 5rem 0 2.2rem;
   color: rgba(255, 255, 255, 0.8);
   background: #FF3366;
